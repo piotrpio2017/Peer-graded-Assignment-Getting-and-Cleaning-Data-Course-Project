@@ -68,27 +68,20 @@ setnames(extr_mean_std_data_set, old_col_names_std, desc_col_names_std)
 #Sort data set according to Subjects and according to Activities
 sorted_data_set <- arrange(extr_mean_std_data_set, extr_mean_std_data_set$Subjects, extr_mean_std_data_set$Activities)
 
-#Create independent tidy data set with the average of each variable for each subject
+#Create independent tidy data set with the average of each variable for each subject and each activity
 variables_means_rows <- sorted_data_set
 for (subject in 1:30) {
     subject_mean <- as.vector(colMeans(sorted_data_set[sorted_data_set$Subjects == subject, 3:81]))
     variables_means_rows[subject,3:81] <- subject_mean
+    for (activity in unique(sorted_data_set[,"Activities"])) {
+            activity_mean <- as.vector(colMeans(sorted_data_set[sorted_data_set$Activities == activity, 3:81]))
+            variables_means_rows[activity,3:81] <- activity_mean
+    }
         
 }
-second_data_set_subject <- variables_means_rows[1:30, ]
-
-#Create independent tidy data set with the average of each variable for each activity
-variables_means_rows <- sorted_data_set
-for (activity in unique(sorted_data_set[,"Activities"])) {
-    activity_mean <- as.vector(colMeans(sorted_data_set[sorted_data_set$Activities == activity, 3:81]))
-    variables_means_rows[activity,3:81] <- activity_mean
-  
-}
-second_data_set_activity <- variables_means_rows[1:6, ]
-
-#Create independent tidy data set with the average of each variable for each activity and each subject
-second_data_set <- rbind(second_data_set_activity, second_data_set_subject)
-
+second_data_set <- variables_means_rows[1:180, ]
+second_data_set[,"Subjects"] <- as.vector(sort(replicate(6, 1:30)))
+second_data_set[,"Activities"] <- as.vector(replicate(30, sort(activity_labels_txt[ ,"V2"])))
 
 ## Write tidy data set, created in step 5 of the instructions, as a txt file created with write.table() using row.name=FALSE for upload during submission
 write.table(second_data_set, "./getdata%2Fprojectfiles%2FUCI HAR Dataset/UCI HAR Tidy Dataset/tidy_data_set.txt", row.names = FALSE)
