@@ -43,8 +43,7 @@ Instruction 5. From the data set in step 4, creates a second, independent tidy d
 a)tidy data set with the average of each variable for each subject was created using for loop working at data set sorted according to subjects and activities values <br />
 b)tidy data set with the average of each variable for each activity was created using for loop working at data set sorted according to subjects and activities values <br />
 c)colMean() functions was used inside for loops to calculate mean for each column in 'sorted_data_set' related to measurements
-d)results of each for loop were saved to new data frame 'second_data_set...' <br />
-e)results from both for loop were merged using rbind() function and saved to new data frame 'second_data_set'. 'second_data_set' has the same column names as e.g. 'extr_mean_std_data_set', but contains rows related to average (mean) for all activities and all subjects. <br />
+d)results of each for loop were saved to new data frame 'second_data_set' with proper values also for columns "Subjects" and "Activities". <br />
 
 Additional writing result of 5th instruction to 'tidy_data_set.txt' file
 ===============================================================================
